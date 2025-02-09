@@ -273,7 +273,7 @@ export default function Home() {
       <footer className="w-full py-8 px-4 md:px-8 border-t border-gray-800 mt-auto">
         <div className="container mx-auto flex justify-center items-center">
           <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()}-SMoctarL. Tous droits réservés.
+            © {new Date().getFullYear()}-SMoctarL
           </p>
         </div>
       </footer>
