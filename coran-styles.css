@@ -1,0 +1,29 @@
+.sourates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.sourate-card {
+    background-color: rgba(76, 175, 80, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #4CAF50;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.sourate-card:hover {
+    transform: translateY(-5px);
+}
+
+.sourate-card h3 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.audio-player {
+    width: 100%;
+    margin-top: 10px;
+} 

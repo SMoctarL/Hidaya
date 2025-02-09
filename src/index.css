@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+body, html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         background: #070907;
+         overflow-x: hidden;
+       }
+@keyframes shootingstar {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-45deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(600px) translateY(600px) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@layer utilities {
+  .animate-shooting-star {
+    animation: shootingstar linear infinite;
+  }
+} 
