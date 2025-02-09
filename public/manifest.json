@@ -28,5 +28,16 @@
   "theme_color": "#070907",
   "background_color": "#070907",
   "orientation": "portrait",
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "categories": ["lifestyle", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Horaires de prière",
+      "url": "/"
+    },
+    {
+      "name": "Sourates",
+      "url": "/quran"
+    }
+  ]
 } 
