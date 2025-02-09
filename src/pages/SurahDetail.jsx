@@ -188,141 +188,144 @@ export default function SurahDetail() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Bouton retour */}
-      <div className="mb-8">
+      {/* Bouton retour fixe */}
+      <div className="fixed top-4 left-4 z-50">
         <Link 
           to="/quran" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
         >
           <MdMenu className="text-2xl" />
           <span>Retour aux sourates</span>
         </Link>
       </div>
 
-      {/* Navigation */}
-      <div className="w-full flex justify-between items-center mb-8">
-        {previousSurah ? (
-          <Link 
-            to={`/quran/${Number(id) - 1}`} 
-            className="text-gray-400 hover:text-white"
-          >
-            <span className="text-sm">{previousSurah.englishName}</span>
-          </Link>
-        ) : (
-          <div className="invisible">Placeholder</div>
-        )}
-        
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2">{surah?.number}. {surah?.name}</h1>
-          <p className="text-gray-400">{surah?.englishName}</p>
-        </div>
-
-        {nextSurah ? (
-          <Link 
-            to={`/quran/${Number(id) + 1}`} 
-            className="text-gray-400 hover:text-white"
-          >
-            <span className="text-sm">{nextSurah.englishName}</span>
-          </Link>
-        ) : (
-          <div className="invisible">Placeholder</div>
-        )}
-      </div>
-
-      {/* Lecteur Audio */}
-      <div className="w-full max-w-3xl mx-auto mb-12">
-        <div className="mb-6">
-          <p className="text-center text-gray-400 mb-2">Select reciter</p>
-          <div className="bg-[#1a1a1a] rounded-lg p-4">
-            <select
-              className="w-full bg-transparent text-white focus:outline-none"
-              defaultValue="Mishary_Rashid_Alafasy"
+      {/* Ajout de padding-top pour compenser le bouton fixe */}
+      <div className="pt-16">
+        {/* Navigation */}
+        <div className="w-full flex justify-between items-center mb-8">
+          {previousSurah ? (
+            <Link 
+              to={`/quran/${Number(id) - 1}`} 
+              className="text-gray-400 hover:text-white"
             >
-              <option value="Mishary_Rashid_Alafasy">Yasser Al-Dossary</option>
-            </select>
+              <span className="text-sm">{previousSurah.englishName}</span>
+            </Link>
+          ) : (
+            <div className="invisible">Placeholder</div>
+          )}
+          
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-2">{surah?.number}. {surah?.name}</h1>
+            <p className="text-gray-400">{surah?.englishName}</p>
           </div>
+
+          {nextSurah ? (
+            <Link 
+              to={`/quran/${Number(id) + 1}`} 
+              className="text-gray-400 hover:text-white"
+            >
+              <span className="text-sm">{nextSurah.englishName}</span>
+            </Link>
+          ) : (
+            <div className="invisible">Placeholder</div>
+          )}
         </div>
 
-        <div className="flex justify-center items-center gap-6">
-          <button 
-            onClick={handlePreviousTrack}
-            className="text-gray-400 hover:text-white text-3xl"
-            disabled={Number(id) <= 1}
-          >
-            <MdSkipPrevious />
-          </button>
-          <button
-            onClick={handleFullSurahPlay}
-            className="text-white hover:text-green-500 text-4xl"
-          >
-            {isPlayingFull ? <MdPause /> : <MdPlayArrow />}
-          </button>
-          <button 
-            onClick={handleNextTrack}
-            className="text-gray-400 hover:text-white text-3xl"
-            disabled={Number(id) >= 114}
-          >
-            <MdSkipNext />
-          </button>
-        </div>
-
-        {/* Barre de progression */}
-        <div className="mt-4 flex items-center gap-2">
-          <span className="text-xs text-gray-400">0:00</span>
-          <div className="flex-1 h-1 bg-gray-700 rounded-full">
-            <div className="h-full bg-green-500 rounded-full" style={{ width: '0%' }}></div>
-          </div>
-          <span className="text-xs text-gray-400">--:--</span>
-        </div>
-      </div>
-
-      {/* Onglets de langue modifiés */}
-      <div className="w-full max-w-3xl mx-auto mb-8">
-        <div className="flex gap-4 border-b border-gray-700">
-          <button
-            onClick={() => setSelectedLanguage('Arabic')}
-            className={`px-4 py-2 ${
-              selectedLanguage === 'Arabic' 
-                ? 'text-green-500 border-b-2 border-green-500' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            Arabic
-          </button>
-          <button
-            onClick={() => setSelectedLanguage('French')}
-            className={`px-4 py-2 ${
-              selectedLanguage === 'French' 
-                ? 'text-green-500 border-b-2 border-green-500' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            Français
-          </button>
-        </div>
-      </div>
-
-      {/* Versets modifiés */}
-      <div className="space-y-8 max-w-3xl mx-auto">
-        {verses.map((verse, index) => (
-          <div key={verse.number} className="border-b border-gray-700 pb-6">
-            <div className="flex items-start gap-4">
-              <span className="text-green-500 font-medium">{verse.numberInSurah}.</span>
-              <div className="flex-1">
-                {/* Affichage conditionnel basé sur la langue sélectionnée */}
-                {selectedLanguage === 'Arabic' ? (
-                  <p className="text-2xl mb-4 text-right font-arabic leading-loose">
-                    {verse.text}
-                  </p>
-                ) : (
-                  <p className="text-gray-300 text-lg">
-                    {translation[index].text}
-                  </p>
-                )}
-              </div>
+        {/* Lecteur Audio */}
+        <div className="w-full max-w-3xl mx-auto mb-12">
+          <div className="mb-6">
+            <p className="text-center text-gray-400 mb-2">Select reciter</p>
+            <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <select
+                className="w-full bg-transparent text-white focus:outline-none"
+                defaultValue="Mishary_Rashid_Alafasy"
+              >
+                <option value="Mishary_Rashid_Alafasy">Yasser Al-Dossary</option>
+              </select>
             </div>
           </div>
-        ))}
+
+          <div className="flex justify-center items-center gap-6">
+            <button 
+              onClick={handlePreviousTrack}
+              className="text-gray-400 hover:text-white text-3xl"
+              disabled={Number(id) <= 1}
+            >
+              <MdSkipPrevious />
+            </button>
+            <button
+              onClick={handleFullSurahPlay}
+              className="text-white hover:text-green-500 text-4xl"
+            >
+              {isPlayingFull ? <MdPause /> : <MdPlayArrow />}
+            </button>
+            <button 
+              onClick={handleNextTrack}
+              className="text-gray-400 hover:text-white text-3xl"
+              disabled={Number(id) >= 114}
+            >
+              <MdSkipNext />
+            </button>
+          </div>
+
+          {/* Barre de progression */}
+          <div className="mt-4 flex items-center gap-2">
+            <span className="text-xs text-gray-400">0:00</span>
+            <div className="flex-1 h-1 bg-gray-700 rounded-full">
+              <div className="h-full bg-green-500 rounded-full" style={{ width: '0%' }}></div>
+            </div>
+            <span className="text-xs text-gray-400">--:--</span>
+          </div>
+        </div>
+
+        {/* Onglets de langue modifiés */}
+        <div className="w-full max-w-3xl mx-auto mb-8">
+          <div className="flex gap-4 border-b border-gray-700">
+            <button
+              onClick={() => setSelectedLanguage('Arabic')}
+              className={`px-4 py-2 ${
+                selectedLanguage === 'Arabic' 
+                  ? 'text-green-500 border-b-2 border-green-500' 
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Arabic
+            </button>
+            <button
+              onClick={() => setSelectedLanguage('French')}
+              className={`px-4 py-2 ${
+                selectedLanguage === 'French' 
+                  ? 'text-green-500 border-b-2 border-green-500' 
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Français
+            </button>
+          </div>
+        </div>
+
+        {/* Versets modifiés */}
+        <div className="space-y-8 max-w-3xl mx-auto">
+          {verses.map((verse, index) => (
+            <div key={verse.number} className="border-b border-gray-700 pb-6">
+              <div className="flex items-start gap-4">
+                <span className="text-green-500 font-medium">{verse.numberInSurah}.</span>
+                <div className="flex-1">
+                  {/* Affichage conditionnel basé sur la langue sélectionnée */}
+                  {selectedLanguage === 'Arabic' ? (
+                    <p className="text-2xl mb-4 text-right font-arabic leading-loose">
+                      {verse.text}
+                    </p>
+                  ) : (
+                    <p className="text-gray-300 text-lg">
+                      {translation[index].text}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

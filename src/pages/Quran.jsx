@@ -162,68 +162,72 @@ export default function Quran() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center text-white mb-8">
-        Les Sourates du Saint Coran
-      </h1>
-
-      <div className="mb-8">
+      {/* Bouton retour fixe */}
+      <div className="fixed top-4 left-4 z-50">
         <Link 
           to="/" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
         >
           <MdMenu className="text-2xl" />
           <span>Retour aux horaires de prières</span>
         </Link>
       </div>
 
-      <div className="relative mb-8">
-        <input
-          type="text"
-          placeholder="Rechercher une sourate..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-12 py-3 bg-[#1a1a1a] text-white rounded-lg
-                   border border-gray-700 focus:outline-none focus:border-green-500"
-        />
-        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-          🔍
-        </span>
-      </div>
+      {/* Ajout de padding-top pour compenser le bouton fixe */}
+      <div className="pt-16">
+        <h1 className="text-3xl font-bold text-center text-white mb-8">
+          Les Sourates du Saint Coran
+        </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {filteredSurahs.map((surah) => (
-          <Link 
-            to={`/quran/${surah.number}`} 
-            key={surah.number}
-          >
-            <div
-              className="bg-[#1a1a1a] rounded-lg p-4 hover:bg-[#252525] 
-                       transition-all duration-300 cursor-pointer border border-gray-800"
+        <div className="relative mb-8">
+          <input
+            type="text"
+            placeholder="Rechercher une sourate..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-12 py-3 bg-[#1a1a1a] text-white rounded-lg
+                     border border-gray-700 focus:outline-none focus:border-green-500"
+          />
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+            🔍
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {filteredSurahs.map((surah) => (
+            <Link 
+              to={`/quran/${surah.number}`} 
+              key={surah.number}
             >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-green-900/30 flex items-center justify-center">
-                  <span className="text-green-500 font-medium">{surah.number}</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold text-white">{surah.name}</h2>
-                    <span className="text-gray-400 text-sm">{surah.englishName}</span>
+              <div
+                className="bg-[#1a1a1a] rounded-lg p-4 hover:bg-[#252525] 
+                         transition-all duration-300 cursor-pointer border border-gray-800"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-900/30 flex items-center justify-center">
+                    <span className="text-green-500 font-medium">{surah.number}</span>
                   </div>
-                  <p className="text-gray-400 text-sm mt-1 line-clamp-2">
-                    {surah.frenchDescription}
-                  </p>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-xl font-bold text-white">{surah.name}</h2>
+                      <span className="text-gray-400 text-sm">{surah.englishName}</span>
+                    </div>
+                    <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                      {surah.frenchDescription}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {filteredSurahs.length === 0 && (
-        <div className="text-center text-gray-400 mt-8">
-          Aucune sourate trouvée pour "{searchTerm}"
+            </Link>
+          ))}
         </div>
-      )}
+
+        {filteredSurahs.length === 0 && (
+          <div className="text-center text-gray-400 mt-8">
+            Aucune sourate trouvée pour "{searchTerm}"
+          </div>
+        )}
+      </div>
 
       <style jsx global>{`
         body {
