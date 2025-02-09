@@ -1,6 +1,6 @@
 {
-  "short_name": "Prayer Times",
-  "name": "Prayer Times & Quran",
+  "short_name": "Hidaya",
+  "name": "Hidaya - Guide de Prière",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +10,19 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#121212",
-  "background_color": "#121212"
+  "theme_color": "#10B981",
+  "background_color": "#070907",
+  "orientation": "portrait"
 } 
