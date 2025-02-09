@@ -20,10 +20,13 @@
       "purpose": "any maskable"
     }
   ],
+  "id": "/",
   "start_url": "/",
   "scope": "/",
-  "display": "fullscreen",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
   "theme_color": "#070907",
   "background_color": "#070907",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "prefer_related_applications": false
 } 
