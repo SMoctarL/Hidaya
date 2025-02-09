@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { MdSkipPrevious, MdSkipNext, MdPlayArrow, MdPause, MdArrowBack, MdArrowForward, MdMenu } from 'react-icons/md';
+import { MdSkipPrevious, MdSkipNext, MdPlayArrow, MdPause } from 'react-icons/md';
 
 export default function SurahDetail() {
   const { id } = useParams();
@@ -31,27 +31,27 @@ export default function SurahDetail() {
         }
 
         // Récupérer les détails de la sourate actuelle
-        const surahResponse = await axios.get(`http://api.alquran.cloud/v1/surah/${id}`);
+        const surahResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${id}`);
         setSurah(surahResponse.data.data);
 
         // Récupérer les versets en arabe
-        const arabicResponse = await axios.get(`http://api.alquran.cloud/v1/surah/${id}/ar.alafasy`);
+        const arabicResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${id}/ar.alafasy`);
         setVerses(arabicResponse.data.data.ayahs);
 
         // Récupérer la traduction française
-        const frenchResponse = await axios.get(`http://api.alquran.cloud/v1/surah/${id}/fr.hamidullah`);
+        const frenchResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${id}/fr.hamidullah`);
         setTranslation(frenchResponse.data.data.ayahs);
 
         // Récupérer les détails des sourates précédente et suivante
         if (Number(id) > 1) {
-          const prevResponse = await axios.get(`http://api.alquran.cloud/v1/surah/${Number(id) - 1}`);
+          const prevResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${Number(id) - 1}`);
           setPreviousSurah(prevResponse.data.data);
         } else {
           setPreviousSurah(null);
         }
         
         if (Number(id) < 114) {
-          const nextResponse = await axios.get(`http://api.alquran.cloud/v1/surah/${Number(id) + 1}`);
+          const nextResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${Number(id) + 1}`);
           setNextSurah(nextResponse.data.data);
         } else {
           setNextSurah(null);
@@ -188,17 +188,6 @@ export default function SurahDetail() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Bouton retour aux sourates */}
-      <div className="mb-8">
-        <Link 
-          to="/quran" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
-        >
-          <MdMenu className="text-2xl" />
-          <span>Retour aux sourates</span>
-        </Link>
-      </div>
-
       {/* Navigation */}
       <div className="w-full flex justify-between items-center mb-8">
         {previousSurah ? (

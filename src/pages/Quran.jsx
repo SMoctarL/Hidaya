@@ -130,7 +130,7 @@ export default function Quran() {
   useEffect(() => {
     const fetchSurahs = async () => {
       try {
-        const response = await axios.get('http://api.alquran.cloud/v1/surah');
+        const response = await axios.get('https://api.alquran.cloud/v1/surah');
         const surahsWithFrenchDesc = response.data.data.map(surah => ({
           ...surah,
           frenchDescription: frenchDescriptions[surah.number] || surah.englishNameTranslation
