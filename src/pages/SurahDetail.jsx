@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { MdSkipPrevious, MdSkipNext, MdPlayArrow, MdPause } from 'react-icons/md';
+import { MdSkipPrevious, MdSkipNext, MdPlayArrow, MdPause, MdMenu } from 'react-icons/md';
 
 export default function SurahDetail() {
   const { id } = useParams();
@@ -188,6 +188,17 @@ export default function SurahDetail() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Bouton retour */}
+      <div className="mb-8">
+        <Link 
+          to="/quran" 
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+        >
+          <MdMenu className="text-2xl" />
+          <span>Retour aux sourates</span>
+        </Link>
+      </div>
+
       {/* Navigation */}
       <div className="w-full flex justify-between items-center mb-8">
         {previousSurah ? (
