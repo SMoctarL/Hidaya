@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SurahCard from '../components/SurahCard';
 import { MdMenu } from 'react-icons/md';
+import { FaHeart } from 'react-icons/fa';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 export default function Quran() {
   const [surahs, setSurahs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const { favorites } = useFavorites();
 
   // Descriptions françaises complètes des sourates
   const frenchDescriptions = {
@@ -162,14 +165,22 @@ export default function Quran() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Bouton retour fixe */}
-      <div className="fixed top-4 left-4 z-50">
+      {/* Boutons fixes en haut */}
+      <div className="fixed top-4 left-4 z-50 flex gap-4">
         <Link 
           to="/" 
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
         >
           <MdMenu className="text-2xl" />
-          <span>Retour aux horaires de prières</span>
+          <span>Retour aux horaires</span>
+        </Link>
+
+        <Link 
+          to="/favorites" 
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
+        >
+          <FaHeart className="text-2xl text-green-500" />
+          <span>Favoris ({favorites.length})</span>
         </Link>
       </div>
 

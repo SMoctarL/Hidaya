@@ -98,6 +98,9 @@ export default function Home() {
             <Link to="/quran" className="text-white hover:text-emerald-400 transition-colors">
               Sourates
             </Link>
+            <Link to="/install" className="text-white hover:text-emerald-400 transition-colors">
+              Installer
+            </Link>
             {/* Menu déroulant des réseaux sociaux */}
             <div className="relative">
               <button 
@@ -268,15 +271,10 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="w-full py-8 px-4 md:px-8 border-t border-gray-800 mt-auto">
-        <div className="container mx-auto">
-          <div className="flex justify-center items-center">
-            {/* Liens utiles */}
-            <div className="text-center">
-              <p className="text-sm text-gray-400">
-                © {new Date().getFullYear()} SMoctarL. Tous droits réservés.
-              </p>
-            </div>
-          </div>
+        <div className="container mx-auto flex justify-center items-center">
+          <p className="text-sm text-gray-400">
+            © {new Date().getFullYear()}-SMoctarL. Tous droits réservés.
+          </p>
         </div>
       </footer>
     </div>

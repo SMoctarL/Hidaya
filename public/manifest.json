@@ -1,6 +1,6 @@
 {
-  "short_name": "Hidaya",
-  "name": "Hidaya - Application de lecture du Coran",
+  "short_name": "Prayer Times",
+  "name": "Prayer Times & Quran",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#070907",
-  "background_color": "#070907"
+  "theme_color": "#121212",
+  "background_color": "#121212"
 } 

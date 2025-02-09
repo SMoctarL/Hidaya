@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MdSkipPrevious, MdSkipNext, MdPlayArrow, MdPause, MdMenu } from 'react-icons/md';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 export default function SurahDetail() {
   const { id } = useParams();
@@ -16,6 +18,7 @@ export default function SurahDetail() {
   const [previousSurah, setPreviousSurah] = useState(null);
   const [nextSurah, setNextSurah] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('Arabic');
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchSurahDetails = async () => {
@@ -187,27 +190,27 @@ export default function SurahDetail() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Bouton retour fixe */}
-      <div className="fixed top-4 left-4 z-50">
-        <Link 
-          to="/quran" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
-        >
-          <MdMenu className="text-2xl" />
-          <span>Retour aux sourates</span>
-        </Link>
-      </div>
+    <div className="min-h-screen bg-[#121212]">
+      <div className="container mx-auto px-4 py-8">
+        {/* Bouton retour fixe */}
+        <div className="fixed top-4 left-4 z-50">
+          <Link 
+            to="/quran" 
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
+          >
+            <MdMenu className="text-2xl" />
+            <span>Retour aux sourates</span>
+          </Link>
+        </div>
 
-      {/* Ajout de padding-top pour compenser le bouton fixe */}
-      <div className="pt-16">
-        {/* Navigation */}
-        <div className="w-full flex justify-between items-center mb-8">
+        {/* Navigation avec flèches */}
+        <div className="w-full flex justify-between items-center mb-8 pt-16">
           {previousSurah ? (
             <Link 
               to={`/quran/${Number(id) - 1}`} 
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-white flex items-center gap-2 group"
             >
+              <MdSkipPrevious className="text-3xl transition-transform group-hover:-translate-x-1" />
               <span className="text-sm">{previousSurah.englishName}</span>
             </Link>
           ) : (
@@ -215,16 +218,33 @@ export default function SurahDetail() {
           )}
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold mb-2">{surah?.number}. {surah?.name}</h1>
-            <p className="text-gray-400">{surah?.englishName}</p>
+            <h1 className="text-3xl font-bold mb-4">{surah?.number}. {surah?.name}</h1>
+            <div className="flex justify-center mb-6">
+              <p className="text-gray-400 px-6 py-2 bg-[#1a1a1a] rounded-full border-2 border-green-500 shadow-lg inline-block">
+                {surah?.englishName}
+              </p>
+            </div>
+            <button
+              onClick={() => isFavorite(surah?.number) 
+                ? removeFavorite(surah?.number) 
+                : addFavorite(surah)
+              }
+              className="mt-2 hover:scale-110 transition-transform duration-200"
+            >
+              {isFavorite(surah?.number) 
+                ? <FaHeart className="text-2xl text-green-500" />
+                : <FaRegHeart className="text-2xl text-gray-400 hover:text-white" />
+              }
+            </button>
           </div>
 
           {nextSurah ? (
             <Link 
               to={`/quran/${Number(id) + 1}`} 
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-white flex items-center gap-2 group"
             >
               <span className="text-sm">{nextSurah.englishName}</span>
+              <MdSkipNext className="text-3xl transition-transform group-hover:translate-x-1" />
             </Link>
           ) : (
             <div className="invisible">Placeholder</div>
