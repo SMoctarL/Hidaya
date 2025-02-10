@@ -21,7 +21,7 @@ export default function Favorites() {
 
           {/* Titre */}
           <h1 className="text-2xl font-bold text-white px-8 py-3 bg-[#1a1a1a] rounded-full border-2 border-green-500 shadow-lg">
-            Mes Sourates Favorites
+            Mes favorites
           </h1>
 
           {/* Élément vide pour maintenir le centrage */}

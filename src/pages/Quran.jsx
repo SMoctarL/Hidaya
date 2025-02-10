@@ -175,7 +175,7 @@ export default function Quran() {
 
         {/* Titre au centre */}
         <h1 className="text-3xl font-bold text-white">
-          Les Sourates du Saint Coran
+          Quran
         </h1>
 
         {/* Bouton favoris à droite avec lien */}
