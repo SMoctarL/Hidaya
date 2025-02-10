@@ -16,11 +16,7 @@ html, body {
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
   body {
-    /* Ajoute le padding en haut */
-    padding-top: calc(env(safe-area-inset-top, 44px) + 200px);
-    /* Active le défilement */
-    height: auto;
-    overflow-y: visible;
+    padding-top: env(safe-area-inset-top, 50px);
   }
 
   #root {
