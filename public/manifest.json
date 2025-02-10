@@ -40,5 +40,8 @@
   "handle_links": "preferred",
   "edge_side_panel": {
     "preferred_width": 0
-  }
+  },
+  "permissions": [
+    "geolocation"
+  ]
 } 

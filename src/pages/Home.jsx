@@ -19,26 +19,32 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userPosition, setUserPosition] = useState(null);
+  const [geoError, setGeoError] = useState(null);
 
   const getUserLocation = () => {
-    return new Promise((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject('La géolocalisation n\'est pas supportée par votre navigateur');
-        return;
-      }
-
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          resolve({
+          setUserPosition({
             lat: position.coords.latitude,
             lng: position.coords.longitude
           });
+          setGeoError(null);
         },
         (error) => {
-          reject('Impossible d\'obtenir votre position');
+          console.error('Erreur de géolocalisation:', error);
+          setGeoError(error.message);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
         }
       );
-    });
+    } else {
+      setGeoError("La géolocalisation n'est pas supportée par votre navigateur");
+    }
   };
 
   const fetchPrayerTimes = async (city) => {
@@ -75,6 +81,65 @@ export default function Home() {
   useEffect(() => {
     fetchPrayerTimes(selectedCity);
   }, [selectedCity]);
+
+  useEffect(() => {
+    // Fonction pour obtenir la position
+    const getUserLocation = () => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setUserPosition({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
+            setGeoError(null);
+          },
+          (error) => {
+            console.error('Erreur de géolocalisation:', error);
+            setGeoError(error.message);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+          }
+        );
+      } else {
+        setGeoError("La géolocalisation n'est pas supportée par votre navigateur");
+      }
+    };
+
+    // Si l'utilisateur sélectionne "Ma position"
+    const handlePositionSelection = () => {
+      // Demander la permission si nécessaire
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            getUserLocation();
+          }
+        });
+      } else {
+        getUserLocation();
+      }
+    };
+
+    // Ajouter un écouteur d'événements pour la sélection de ville
+    const citySelect = document.querySelector('select[name="city"]');
+    if (citySelect) {
+      citySelect.addEventListener('change', (e) => {
+        if (e.target.value === 'position') {
+          handlePositionSelection();
+        }
+      });
+    }
+
+    return () => {
+      // Nettoyage des écouteurs d'événements
+      if (citySelect) {
+        citySelect.removeEventListener('change', handlePositionSelection);
+      }
+    };
+  }, []);
 
   const handleCityChange = (city) => {
     setSelectedCity(city);
