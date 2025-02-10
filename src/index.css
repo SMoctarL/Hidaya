@@ -38,14 +38,26 @@ html, body {
 
 /* Styles spécifiques pour l'application installée */
 @media screen and (display-mode: standalone) {
-  #safe-area {
-    padding-top: max(env(safe-area-inset-top, 50px), 50px);
+  body {
+    /* Augmente significativement le padding en haut */
+    padding-top: max(env(safe-area-inset-top, 0px) + 80px, 80px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  
-  /* Ajustements iOS */
-  @supports (-webkit-touch-callout: none) {
-    #safe-area {
-      padding-top: max(env(safe-area-inset-top, 50px), 60px);
+
+  #root {
+    min-height: calc(100vh - 80px);
+  }
+}
+
+/* Ajustement spécifique pour iOS */
+@supports (-webkit-touch-callout: none) {
+  @media screen and (display-mode: standalone) {
+    body {
+      /* Encore plus de padding pour iOS */
+      padding-top: max(env(safe-area-inset-top, 0px) + 100px, 100px);
     }
   }
 }
