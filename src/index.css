@@ -11,25 +11,13 @@
 
 html, body {
   background-color: #070907;
-  height: 100%;
-}
-
-#root {
-  min-height: 100%;
 }
 
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
   body {
-    /* Espace minimal pour la barre de statut */
-    padding-top: env(safe-area-inset-top, 44px);
-  }
-
-  /* Ajustements pour iOS */
-  @supports (-webkit-touch-callout: none) {
-    body {
-      padding-top: env(safe-area-inset-top, 44px);
-    }
+    /* Juste l'espace pour la barre de statut */
+    padding-top: env(safe-area-inset-top);
   }
 }
 
