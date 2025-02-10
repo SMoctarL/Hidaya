@@ -332,7 +332,7 @@ export default function Home() {
           </div>
 
           {/* Section Oustaz Omar Thioune */}
-          <div className="mt-auto mx-auto max-w-md w-full">
+          <div className="mx-auto max-w-md w-full mb-8">
             <div className="bg-gradient-to-bl from-yellow-500/30 via-yellow-600/20 to-transparent rounded-2xl overflow-hidden shadow-lg">
               <div className="relative z-10">
                 <p className="text-lg py-4 text-white-300 text-center">Suivez l'integralité du Ramadan et bien plus avec Oustaz Omar Thioune</p>
