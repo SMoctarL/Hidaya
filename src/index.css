@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
  
-/* Reset de base */
+/* Reset des styles de base */
 * {
   margin: 0;
   padding: 0;
@@ -10,10 +10,44 @@
 }
 
 html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
   background-color: #070907;
+}
+
+/* Styles pour l'application installée */
+@media screen and (display-mode: standalone) {
+  body {
+    /* Ajoute le padding en haut */
+    padding-top: calc(env(safe-area-inset-top, 44px) + 200px);
+    /* Active le défilement */
+    height: auto;
+    overflow-y: visible;
+  }
+
+  #root {
+    /* Permet le défilement du contenu */
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+  }
+
+  /* Ajustements pour iOS */
+  @supports (-webkit-touch-callout: none) {
+    body {
+      padding-top: calc(env(safe-area-inset-top, 44px) + 250px);
+    }
+  }
+}
+
+/* Styles pour le mode navigateur normal */
+@media not screen and (display-mode: standalone) {
+  body {
+    height: auto;
+    overflow-y: visible;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
 }
 
 /* Container principal avec marges de sécurité */
@@ -45,33 +79,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #070907;
-}
-
-/* Styles spécifiques pour l'application installée */
-@media screen and (display-mode: standalone) {
-  body {
-    /* Garde le padding en haut */
-    padding-top: calc(var(--safe-top) + 200px);
-    /* Permet le défilement */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  #root {
-    /* Assure que le contenu est scrollable */
-    min-height: calc(100% - var(--safe-top) - 200px);
-    position: relative;
-  }
-
-  /* Ajustements iOS */
-  @supports (-webkit-touch-callout: none) {
-    body {
-      padding-top: calc(var(--safe-top) + 250px);
-    }
-    #root {
-      min-height: calc(100% - var(--safe-top) - 250px);
-    }
-  }
 }
 
 @keyframes shootingstar {
