@@ -138,7 +138,7 @@ export default function Home() {
                       Instagram
                     </a>
                     <a
-                      href="https://github.com/SMoct"
+                      href="https://github.com/SMoctarL"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-emerald-400"
