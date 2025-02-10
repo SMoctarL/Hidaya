@@ -29,6 +29,14 @@ html, body {
     padding-top: env(safe-area-inset-top);
     background-color: #070907;
   }
+
+  /* Ajuste les boutons de navigation dans Quran et SurahDetails */
+  .nav-buttons, 
+  .back-button,
+  .favorite-button {
+    margin-top: env(safe-area-inset-top);
+    padding-top: 10px;
+  }
 }
 
 /* Animation étoile filante */
