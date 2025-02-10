@@ -36,12 +36,22 @@ html, body {
   padding-top: 20px; /* Padding supplémentaire pour l'espacement */
 }
 
+/* Styles de base */
+:root {
+  --safe-top: env(safe-area-inset-top, 44px);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #070907;
+}
+
 /* Styles spécifiques pour l'application installée */
 @media screen and (display-mode: standalone) {
   body {
-    /* Padding très important en haut */
-    padding-top: max(env(safe-area-inset-top, 0px) + 150px, 150px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    /* Padding très important en haut pour éviter le débordement */
+    padding-top: calc(var(--safe-top) + 200px);
     min-height: 100vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -50,14 +60,12 @@ html, body {
   #root {
     min-height: calc(100vh - 150px);
   }
-}
 
-/* Ajustement spécifique pour iOS */
-@supports (-webkit-touch-callout: none) {
-  @media screen and (display-mode: standalone) {
+  /* Ajustements spécifiques pour iOS */
+  @supports (-webkit-touch-callout: none) {
     body {
       /* Encore plus de padding pour iOS */
-      padding-top: max(env(safe-area-inset-top, 0px) + 180px, 180px);
+      padding-top: calc(var(--safe-top) + 250px);
     }
   }
 }
