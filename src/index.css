@@ -15,9 +15,20 @@ html, body {
 
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
-  /* Ajoute juste un petit espace en haut */
+  /* Ajuste l'espace en haut pour iOS */
   body {
-    padding-top: 44px;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Ajuste la position du header */
+  header, nav {
+    padding-top: env(safe-area-inset-top);
+    background-color: #070907;
+  }
+
+  /* Ajuste le contenu principal */
+  main {
+    padding-top: env(safe-area-inset-top);
   }
 }
 
