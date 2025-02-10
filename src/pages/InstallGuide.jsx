@@ -18,7 +18,7 @@ export default function InstallGuide() {
       <div className="container mx-auto px-4 py-8">
         <div className="pt-8 max-w-2xl mx-auto">
           <h1 className="text-2xl font-bold text-white px-8 py-3 bg-[#1a1a1a] rounded-full border-2 border-emerald-500 shadow-lg text-center mb-8">
-            Comment installer l'application
+            Comment installer Hidaya :)
           </h1>
 
           {/* iOS */}
