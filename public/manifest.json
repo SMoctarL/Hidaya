@@ -1,13 +1,8 @@
 {
   "short_name": "Hidaya",
-  "name": "Hidaya - Guide de Prière",
-  "description": "Application de prière et du Coran",
+  "name": "Hidaya",
+  "description": "Guide de Prière et du Coran",
   "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
     {
       "src": "logo192.png",
       "type": "image/png",
@@ -21,21 +16,25 @@
       "purpose": "any maskable"
     }
   ],
-  "id": "/",
-  "start_url": "/?fullscreen=true",
-  "display": "fullscreen",
-  "display_override": ["fullscreen", "standalone"],
+  "id": "com.hidaya.app",
+  "start_url": "/",
+  "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
-  "shortcuts": [
-    {
-      "name": "Horaires de prière",
-      "url": "/?source=pwa",
-      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
-    }
-  ],
-  "capture_links": "existing-client-navigate",
+  "categories": ["lifestyle", "utilities"],
+  "prefer_related_applications": false,
   "scope": "/",
-  "prefer_related_applications": false
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  },
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Accueil de Hidaya"
+    }
+  ]
 } 
