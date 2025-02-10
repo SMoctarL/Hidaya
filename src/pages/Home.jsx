@@ -81,8 +81,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#070907] relative flex flex-col">
-      {/* Header */}
-      <header className="w-full py-4 px-4 md:px-8 border-b border-gray-800">
+      {/* Header fixe */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#070907]/95 backdrop-blur-sm py-4 px-4 md:px-8 border-b border-gray-800">
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold">
@@ -157,9 +157,10 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Contenu principal */}
-      <main className="flex-grow">
-        <div className="container mx-auto px-2 md:px-4 pt-8 md:pt-16 pb-8">
+      {/* Ajout d'un espace pour compenser le header fixe */}
+      <div className="pt-20">
+        {/* Contenu principal */}
+        <main className="container mx-auto px-2 md:px-4 pt-8 md:pt-16 pb-8">
           <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8">
             
             {/* Section principale */}
@@ -263,8 +264,8 @@ export default function Home() {
             </div>
 
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
 
       {/* Footer */}
       <footer className="w-full py-8 px-4 md:px-8 border-t border-gray-800 mt-auto">
