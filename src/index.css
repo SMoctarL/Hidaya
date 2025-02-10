@@ -39,8 +39,8 @@ html, body {
 /* Styles spécifiques pour l'application installée */
 @media screen and (display-mode: standalone) {
   body {
-    /* Augmente significativement le padding en haut */
-    padding-top: max(env(safe-area-inset-top, 0px) + 80px, 80px);
+    /* Padding très important en haut */
+    padding-top: max(env(safe-area-inset-top, 0px) + 150px, 150px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     min-height: 100vh;
     overflow-y: auto;
@@ -48,7 +48,7 @@ html, body {
   }
 
   #root {
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 150px);
   }
 }
 
@@ -57,7 +57,7 @@ html, body {
   @media screen and (display-mode: standalone) {
     body {
       /* Encore plus de padding pour iOS */
-      padding-top: max(env(safe-area-inset-top, 0px) + 100px, 100px);
+      padding-top: max(env(safe-area-inset-top, 0px) + 180px, 180px);
     }
   }
 }
