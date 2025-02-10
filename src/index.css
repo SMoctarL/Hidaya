@@ -13,28 +13,28 @@ html, body {
   background-color: #070907;
 }
 
-/* Styles de base */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #070907;
-}
-
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
-  /* Ajuste le header pour qu'il reste visible */
-  header {
-    position: fixed;
-    top: env(safe-area-inset-top, 50px);
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: #070907;
+  body {
+    /* Ajoute le padding en haut */
+    padding-top: calc(env(safe-area-inset-top, 44px) + 200px);
+    /* Active le défilement */
+    height: auto;
+    overflow-y: visible;
   }
 
-  /* Ajuste le contenu principal pour qu'il commence après le header */
-  main {
-    padding-top: calc(env(safe-area-inset-top, 50px) + 60px); /* 60px est la hauteur approximative du header */
+  #root {
+    /* Permet le défilement du contenu */
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+  }
+
+  /* Ajustements pour iOS */
+  @supports (-webkit-touch-callout: none) {
+    body {
+      padding-top: calc(env(safe-area-inset-top, 44px) + 250px);
+    }
   }
 }
 
@@ -73,6 +73,13 @@ body {
 /* Styles de base */
 :root {
   --safe-area-top: env(safe-area-inset-top, 20px);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #070907;
 }
 
 @keyframes shootingstar {
