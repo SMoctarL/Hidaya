@@ -10,7 +10,8 @@ const CITIES = {
   thies: { lat: 14.7910, lng: -16.9359, name: 'Thies' },
   paris: { lat: 48.8566, lng: 2.3522, name: 'Paris' },
   toronto: { lat: 43.6532, lng: -79.3832, name: 'Toronto' },
-  newJersey: { lat: 40.0583, lng: -74.4057, name: 'New Jersey' }
+  newJersey: { lat: 40.0583, lng: -74.4057, name: 'New Jersey' },
+  chicoutimi: { lat: 48.4279, lng: -71.0485, name: 'Chicoutimi' }
 };
 
 export default function Home() {
