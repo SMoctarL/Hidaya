@@ -2,20 +2,23 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     
-    <!-- Configuration iOS -->
+    <!-- Configuration PWA -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, minimal-ui, standalone" />
+    <meta name="theme-color" content="#070907" />
+    <meta name="description" content="Hidaya - Guide de prière et du Coran" />
+    
+    <!-- iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Hidaya" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     
-    <!-- Configuration Android -->
+    <!-- Android -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="Hidaya" />
-    <meta name="theme-color" content="#070907" />
     
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <title>Hidaya</title>
@@ -52,19 +55,33 @@
     <div id="root"></div>
 
     <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/service-worker.js')
+            .then(registration => {
+              console.log('SW registered');
+            })
+            .catch(error => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
+
+      // Détecter si l'app est lancée depuis l'écran d'accueil
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        // L'application est lancée en mode standalone
+        document.documentElement.requestFullscreen().catch(err => {
+          console.log('Erreur mode plein écran:', err);
+        });
+      }
+
       // Empêcher le comportement de défilement du navigateur
       document.addEventListener('touchmove', function(e) {
         if(!e.target.closest('#root')) {
           e.preventDefault();
         }
       }, { passive: false });
-
-      // Forcer le mode plein écran sur iOS
-      if (("standalone" in window.navigator) && window.navigator.standalone) {
-        document.addEventListener('click', function(e) {
-          e.preventDefault();
-        });
-      }
     </script>
   </body>
 </html> 

@@ -16,13 +16,14 @@
       "purpose": "any maskable"
     }
   ],
-  "id": "com.hidaya.app",
-  "start_url": "/?standalone=true",
-  "display": "standalone",
-  "display_override": ["standalone", "fullscreen"],
+  "id": "/",
+  "start_url": "/",
+  "display": "fullscreen",
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
+  "display_override": ["fullscreen", "standalone"],
+  "categories": ["lifestyle", "utilities"],
   "prefer_related_applications": false,
   "scope": "/",
   "shortcuts": [
@@ -31,7 +32,6 @@
       "url": "/"
     }
   ],
-  "categories": ["lifestyle"],
   "launch_handler": {
     "client_mode": ["focus-existing", "auto"]
   },
