@@ -146,7 +146,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070907] relative flex flex-col">
+    <div className="min-h-screen bg-[#070907] text-white">
       {/* Header fixe */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#070907]/95 backdrop-blur-sm py-4 px-4 md:px-8 border-b border-gray-800">
         <div className="container mx-auto flex justify-between items-center">
@@ -329,6 +329,33 @@ export default function Home() {
               </div>
             </div>
 
+          </div>
+
+          {/* Section Oustaz Omar Thioune */}
+          <div className={`
+            mt-8 mx-auto max-w-md
+            ${window.innerWidth <= 768 ? 'fixed bottom-8 left-4 right-4 w-[calc(100%-32px)]' : ''}
+          `}>
+            <div className="bg-gradient-to-bl from-yellow-500/30 via-yellow-600/20 to-transparent rounded-2xl overflow-hidden shadow-lg">
+              <div className="relative z-10">
+                <p className="text-lg py-4 text-white-300 text-center">Suivez l'integralité du Ramadan et bien plus avec Oustaz Omar Thioune</p>
+                <a 
+                  href="https://www.youtube.com/@oumoulkhouratv7143" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block hover:opacity-90 transition-opacity"
+                >
+                  <img 
+                    src="/smoctarl.jpg" 
+                    alt="SMoctarL" 
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4 text-center">
+                    <span className="text-sm text-gray-400">@smoctarl</span>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </main>
       </div>
