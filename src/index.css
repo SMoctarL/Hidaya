@@ -15,9 +15,19 @@ html, body {
 
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
-  body {
-    /* Juste l'espace pour la barre de statut */
-    padding-top: env(safe-area-inset-top);
+  /* Ajuste la position du header */
+  nav, header {
+    position: fixed;
+    top: env(safe-area-inset-top);
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: #070907;
+  }
+
+  /* Ajuste le contenu pour qu'il commence après le header */
+  main {
+    margin-top: calc(env(safe-area-inset-top) + 64px);
   }
 }
 
