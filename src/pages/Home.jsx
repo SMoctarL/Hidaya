@@ -224,7 +224,7 @@ export default function Home() {
       </header>
 
       {/* Ajout d'un espace pour compenser le header fixe */}
-      <div className="pt-20">
+      <div className="pt-24">
         {/* Contenu principal */}
         <main className="container mx-auto px-2 md:px-4 pt-8 md:pt-16 pb-8">
           <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8">
@@ -332,10 +332,7 @@ export default function Home() {
           </div>
 
           {/* Section Oustaz Omar Thioune */}
-          <div className={`
-            mt-8 mx-auto max-w-md
-            ${window.innerWidth <= 768 ? 'fixed bottom-8 left-4 right-4 w-[calc(100%-32px)]' : ''}
-          `}>
+          <div className="mt-auto mx-auto max-w-md w-full">
             <div className="bg-gradient-to-bl from-yellow-500/30 via-yellow-600/20 to-transparent rounded-2xl overflow-hidden shadow-lg">
               <div className="relative z-10">
                 <p className="text-lg py-4 text-white-300 text-center">Suivez l'integralité du Ramadan et bien plus avec Oustaz Omar Thioune</p>
@@ -343,10 +340,12 @@ export default function Home() {
                   href="https://www.youtube.com/@oumoulkhouratv7143" 
                   target="_blank" 
                   rel="noopener noreferrer"
+
                   className="block hover:opacity-90 transition-opacity"
+
                 >
                   <img 
-                    src="/smoctarl.jpg" 
+                    src="smoctarl.jpg" 
                     alt="SMoctarL" 
                     className="w-full h-48 object-cover"
                   />
