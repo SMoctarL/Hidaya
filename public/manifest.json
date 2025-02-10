@@ -7,18 +7,19 @@
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "id": "/",
-  "start_url": "/",
+  "start_url": "/?mode=pwa",
   "display": "fullscreen",
+  "display_override": ["fullscreen"],
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
