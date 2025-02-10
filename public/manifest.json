@@ -7,29 +7,35 @@
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "id": "com.hidaya.app",
-  "start_url": "/?source=pwa",
+  "start_url": "/?standalone=true",
   "display": "standalone",
+  "display_override": ["standalone", "fullscreen"],
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
   "prefer_related_applications": false,
   "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Horaires de prière",
+      "url": "/"
+    }
+  ],
   "categories": ["lifestyle", "utilities"],
   "launch_handler": {
     "client_mode": ["focus-existing", "auto"]
   },
   "dir": "auto",
   "lang": "fr",
-  "display_override": ["standalone", "minimal-ui"],
   "handle_links": "preferred"
 } 
