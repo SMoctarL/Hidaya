@@ -15,20 +15,19 @@ html, body {
 
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
-  /* Ajuste l'espace en haut pour iOS */
   body {
     padding-top: env(safe-area-inset-top);
   }
 
-  /* Ajuste la position du header */
-  header, nav {
-    padding-top: env(safe-area-inset-top);
-    background-color: #070907;
+  /* Ajuste la position du logo Hidaya */
+  .logo {
+    margin-top: env(safe-area-inset-top);
   }
 
-  /* Ajuste le contenu principal */
-  main {
+  /* Garde les autres éléments alignés */
+  nav {
     padding-top: env(safe-area-inset-top);
+    background-color: #070907;
   }
 }
 
