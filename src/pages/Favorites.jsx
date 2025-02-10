@@ -8,22 +8,24 @@ export default function Favorites() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Bouton retour fixe */}
-      <div className="fixed top-4 left-4 z-50">
-        <Link 
-          to="/quran" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
-        >
-          <MdMenu className="text-2xl" />
-          <span>Retour aux sourates</span>
-        </Link>
-      </div>
+
 
       <div className="pt-16">
-        <div className="flex justify-center mb-8">
+        <div className="flex items-center justify-between px-6 mb-8">
+          {/* Bouton retour à gauche */}
+          <Link to="/quran" className="text-white hover:text-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </Link>
+
+          {/* Titre */}
           <h1 className="text-2xl font-bold text-white px-8 py-3 bg-[#1a1a1a] rounded-full border-2 border-green-500 shadow-lg">
             Mes Sourates Favorites
           </h1>
+
+          {/* Élément vide pour maintenir le centrage */}
+          <div className="w-6"></div>
         </div>
         
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

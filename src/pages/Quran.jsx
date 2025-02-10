@@ -165,31 +165,29 @@ export default function Quran() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Boutons fixes en haut */}
-      <div className="fixed top-4 left-4 z-50 flex gap-4">
-        <Link 
-          to="/" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
-        >
-          <MdMenu className="text-2xl" />
-          <span>Retour aux horaires</span>
+      <div className="flex items-center justify-between px-6 mb-8">
+        {/* Bouton retour à gauche */}
+        <Link to="/" className="text-white hover:text-green-500">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
         </Link>
 
-        <Link 
-          to="/favorites" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-[#1a1a1a] px-4 py-2 rounded-lg shadow-lg"
-        >
-          <FaHeart className="text-2xl text-green-500" />
-          <span>Favoris ({favorites.length})</span>
+        {/* Titre au centre */}
+        <h1 className="text-3xl font-bold text-white">
+          Les Sourates du Saint Coran
+        </h1>
+
+        {/* Bouton favoris à droite avec lien */}
+        <Link to="/favorites" className="text-white hover:text-green-500">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
         </Link>
       </div>
 
       {/* Ajout de padding-top pour compenser le bouton fixe */}
       <div className="pt-16">
-        <h1 className="text-3xl font-bold text-center text-white mb-8">
-          Les Sourates du Saint Coran
-        </h1>
-
         <div className="relative mb-8">
           <input
             type="text"
