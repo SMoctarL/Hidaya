@@ -2,54 +2,57 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <!-- Favicon principal -->
-    <link rel="icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico" />
     
-    <!-- Meta tags spécifiques pour iOS -->
+    <!-- Configuration iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Hidaya" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
     
-    <!-- Icônes pour iOS -->
+    <!-- Icônes iOS -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/logo192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/logo192.png" />
     <link rel="apple-touch-icon" sizes="167x167" href="%PUBLIC_URL%/logo192.png" />
     
-    <!-- Écran de démarrage iOS -->
-    <link rel="apple-touch-startup-image" href="%PUBLIC_URL%/logo512.png" />
+    <!-- Splash Screens iOS -->
+    <!-- iPhone Xs Max (1242px x 2688px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" href="%PUBLIC_URL%/splash-1242x2688.png" />
+    <!-- iPhone Xr (828px x 1792px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="%PUBLIC_URL%/splash-828x1792.png" />
+    <!-- iPhone X, Xs (1125px x 2436px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="%PUBLIC_URL%/splash-1125x2436.png" />
     
     <meta name="theme-color" content="#070907" />
     <meta name="description" content="Hidaya - Guide de prière et du Coran" />
-    
-    <!-- Pour les appareils mobiles -->
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="%PUBLIC_URL%/logo512.png" />
-    
-    <!-- iOS meta tags -->
-    <meta name="apple-mobile-web-app-title" content="Hidaya" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    
-    <!-- Android meta tags -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="Hidaya" />
-    <meta name="screen-orientation" content="portrait" />
-    <meta name="full-screen" content="true" />
-    <meta name="browsermode" content="application" />
     
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <title>Hidaya</title>
 
     <style>
+      /* Styles pour mode standalone iOS */
       @media all and (display-mode: standalone) {
+        html {
+          -webkit-text-size-adjust: 100%;
+          -webkit-tap-highlight-color: transparent;
+        }
+        
         body {
+          -webkit-user-select: none;
+          user-select: none;
           margin: 0;
-          padding: 0;
+          padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
           min-height: 100vh;
           width: 100vw;
+          position: fixed;
+          overflow: hidden;
+        }
+        
+        #root {
+          height: 100vh;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
       }
     </style>
@@ -57,24 +60,19 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
     <script>
-      if (window.navigator && navigator.serviceWorker) {
-        navigator.serviceWorker.getRegistrations()
-          .then(function(registrations) {
-            for(let registration of registrations) {
-              registration.unregister();
-            }
-          });
-      }
-      
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/serviceWorker.js')
-            .then(function(registration) {
-              console.log('ServiceWorker registration successful');
-            }, function(err) {
-              console.log('ServiceWorker registration failed: ', err);
-            });
+      // Empêcher le comportement de défilement du navigateur
+      document.addEventListener('touchmove', function(e) {
+        if(!e.target.closest('#root')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Forcer le mode plein écran sur iOS
+      if (("standalone" in window.navigator) && window.navigator.standalone) {
+        document.addEventListener('click', function(e) {
+          e.preventDefault();
         });
       }
     </script>
