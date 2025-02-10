@@ -15,39 +15,36 @@ html, body {
 
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
-  :root {
-    --safe-top: env(safe-area-inset-top, 44px);
-  }
-
   body {
-    padding-top: var(--safe-top);
+    padding-top: env(safe-area-inset-top);
   }
 
-  /* Style pour la barre de navigation fixe en haut */
-  .fixed-nav {
-    position: fixed;
-    top: var(--safe-top);
-    left: 0;
-    right: 0;
-    z-index: 50;
+  /* Ajuste la position du logo Hidaya */
+  .logo {
+    margin-top: env(safe-area-inset-top);
+  }
+
+  /* Garde les autres éléments alignés */
+  nav {
+    padding-top: env(safe-area-inset-top);
     background-color: #070907;
-    padding: 1rem;
   }
 
-  /* Style pour les boutons de navigation */
-  .nav-buttons {
-    position: fixed;
-    top: var(--safe-top);
-    padding-top: 1rem;
-    z-index: 40;
-  }
-
+  /* Ajuste les boutons fixed avec une valeur plus grande */
+  .nav-buttons, 
   .back-button,
   .favorite-button {
     position: fixed;
-    top: var(--safe-top);
-    padding-top: 1rem;
-    z-index: 40;
+    top: 80px !important; /* Valeur fixe plus grande */
+  }
+
+  /* Spécifique pour iOS */
+  @supports (-webkit-touch-callout: none) {
+    .nav-buttons, 
+    .back-button,
+    .favorite-button {
+      top: 90px !important;
+    }
   }
 }
 
