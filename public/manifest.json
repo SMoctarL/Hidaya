@@ -22,8 +22,8 @@
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
-  "display_override": ["fullscreen", "standalone"],
-  "categories": ["lifestyle", "utilities"],
+  "display_override": ["fullscreen"],
+  "categories": ["lifestyle"],
   "prefer_related_applications": false,
   "scope": "/",
   "shortcuts": [
