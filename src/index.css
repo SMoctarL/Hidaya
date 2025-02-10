@@ -43,7 +43,7 @@ html, body {
     .nav-buttons, 
     .back-button,
     .favorite-button {
-      top: 1000px !important;
+      top: 100px !important;
     }
   }
 }
