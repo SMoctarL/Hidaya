@@ -350,7 +350,7 @@ export default function Home() {
                     className="w-full h-48 object-cover"
                   />
                   <div className="p-4 text-center">
-                    <span className="text-sm text-gray-400">@smoctarl</span>
+                    <span className="text-sm text-gray-400">@Oustaz Omar Thioune</span>
                   </div>
                 </a>
               </div>
