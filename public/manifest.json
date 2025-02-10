@@ -22,16 +22,20 @@
     }
   ],
   "id": "/",
-  "start_url": "/",
+  "start_url": "/?fullscreen=true",
   "display": "fullscreen",
-  "display_override": ["fullscreen"],
+  "display_override": ["fullscreen", "standalone"],
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
-  "launch_handler": {
-    "client_mode": ["focus-existing", "auto"]
-  },
-  "categories": ["lifestyle", "utilities"],
-  "prefer_related_applications": false,
-  "scope": "/"
+  "shortcuts": [
+    {
+      "name": "Horaires de prière",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    }
+  ],
+  "capture_links": "existing-client-navigate",
+  "scope": "/",
+  "prefer_related_applications": false
 } 
