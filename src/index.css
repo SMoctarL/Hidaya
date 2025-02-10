@@ -30,12 +30,12 @@ html, body {
     background-color: #070907;
   }
 
-  /* Ajuste les boutons fixed */
+  /* Ajuste les boutons fixed avec une valeur plus grande */
   .nav-buttons, 
   .back-button,
   .favorite-button {
     position: fixed;
-    top: calc(env(safe-area-inset-top) + 44px) !important; /* Force la position */
+    top: 80px !important; /* Valeur fixe plus grande */
   }
 
   /* Spécifique pour iOS */
@@ -43,7 +43,7 @@ html, body {
     .nav-buttons, 
     .back-button,
     .favorite-button {
-      top: calc(env(safe-area-inset-top) + 50px) !important;
+      top: 90px !important;
     }
   }
 }
