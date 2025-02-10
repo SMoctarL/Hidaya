@@ -33,12 +33,37 @@ export default defineConfig({
             purpose: 'any maskable'
           }
         ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.alquran\.cloud\/v1/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'quran-api',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 jours
+              }
+            }
+          }
+        ]
       }
     })
   ],
   build: {
     outDir: 'dist',
-    sourcemap: true
+    assetsDir: 'assets',
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['react-icons']
+        }
+      }
+    }
   },
   server: {
     port: 3000
@@ -48,6 +73,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/src'
+    }
+  },
+  css: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer')
+      ]
     }
   }
 }) 
