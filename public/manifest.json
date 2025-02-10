@@ -23,25 +23,15 @@
   ],
   "id": "/",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen",
+  "display_override": ["fullscreen"],
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
   "launch_handler": {
     "client_mode": ["focus-existing", "auto"]
   },
-  "display_override": ["standalone", "fullscreen"],
   "categories": ["lifestyle", "utilities"],
   "prefer_related_applications": false,
-  "scope": "/",
-  "shortcuts": [
-    {
-      "name": "Horaires de prière",
-      "url": "/"
-    },
-    {
-      "name": "Sourates",
-      "url": "/quran"
-    }
-  ]
+  "scope": "/"
 } 
