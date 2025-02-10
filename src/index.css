@@ -50,22 +50,26 @@ body {
 /* Styles spécifiques pour l'application installée */
 @media screen and (display-mode: standalone) {
   body {
-    /* Padding très important en haut pour éviter le débordement */
+    /* Garde le padding en haut */
     padding-top: calc(var(--safe-top) + 200px);
-    min-height: 100vh;
+    /* Permet le défilement */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   #root {
-    min-height: calc(100vh - 150px);
+    /* Assure que le contenu est scrollable */
+    min-height: calc(100% - var(--safe-top) - 200px);
+    position: relative;
   }
 
-  /* Ajustements spécifiques pour iOS */
+  /* Ajustements iOS */
   @supports (-webkit-touch-callout: none) {
     body {
-      /* Encore plus de padding pour iOS */
       padding-top: calc(var(--safe-top) + 250px);
+    }
+    #root {
+      min-height: calc(100% - var(--safe-top) - 250px);
     }
   }
 }
