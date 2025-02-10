@@ -7,20 +7,29 @@
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/",
+  "id": "com.hidaya.app",
+  "start_url": "/?source=pwa",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
   "prefer_related_applications": false,
-  "scope": "/"
+  "scope": "/",
+  "categories": ["lifestyle", "utilities"],
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  },
+  "dir": "auto",
+  "lang": "fr",
+  "display_override": ["standalone", "minimal-ui"],
+  "handle_links": "preferred"
 } 
