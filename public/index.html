@@ -11,8 +11,9 @@
     <link rel="icon" type="image/png" sizes="512x512" href="%PUBLIC_URL%/logo512.png" />
     
     <!-- Meta tags de base -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, minimal-ui" />
-    <meta name="theme-color" content="#070907" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, minimal-ui, standalone" />
+    <meta name="theme-color" content="#070907" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#070907" media="(prefers-color-scheme: dark)" />
     <meta name="description" content="Hidaya - Guide de prière et du Coran" />
     
     <!-- iOS meta tags -->
@@ -25,12 +26,24 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="Hidaya" />
     <meta name="screen-orientation" content="portrait" />
-    <meta name="full-screen" content="yes" />
+    <meta name="full-screen" content="true" />
     <meta name="browsermode" content="application" />
     
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <title>Hidaya</title>
+
+    <style>
+      @media all and (display-mode: fullscreen) {
+        body {
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+          width: 100vw;
+          overflow: hidden;
+        }
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
