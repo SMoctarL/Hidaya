@@ -1,12 +1,14 @@
-const CACHE_NAME = 'hidaya-v2';
+const CACHE_NAME = 'hidaya-v1';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
   '/logo192.png',
   '/logo512.png',
-  '/quran',
-  '/favorites'
+  '/favicon.ico',
+  '/static/js/main.*.js',
+  '/static/js/bundle.js',
+  '/static/css/main.*.css'
 ];
 
 // Installation
@@ -14,7 +16,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
@@ -37,15 +38,12 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch
+// Stratégie de cache : Network First, puis cache
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
+    fetch(event.request)
+      .catch(() => {
+        return caches.match(event.request);
       })
   );
 }); 

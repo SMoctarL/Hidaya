@@ -31,11 +31,14 @@
       "url": "/"
     }
   ],
-  "categories": ["lifestyle", "utilities"],
+  "categories": ["lifestyle"],
   "launch_handler": {
     "client_mode": ["focus-existing", "auto"]
   },
   "dir": "auto",
   "lang": "fr",
-  "handle_links": "preferred"
+  "handle_links": "preferred",
+  "edge_side_panel": {
+    "preferred_width": 0
+  }
 } 

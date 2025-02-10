@@ -3,21 +3,16 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  
-  // Montrer le bouton d'installation si disponible
-  const installButton = document.getElementById('install-button');
-  if (installButton) {
-    installButton.style.display = 'block';
-  }
 });
 
-export const installApp = async () => {
+export const installPWA = async () => {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    console.log(`Installation ${outcome}`);
     deferredPrompt = null;
+    return outcome === 'accepted';
   }
+  return false;
 };
 
 // Vérifier si l'app est déjà installée
