@@ -8,7 +8,7 @@ const CITIES = {
   position: { name: 'Ma position' },
   dakar: { lat: 14.7167, lng: -17.4677, name: 'Dakar' },
   thies: { lat: 14.7910, lng: -16.9359, name: 'Thies' },
-  paris: { lat: 48.8566, lng: 2.3522, name: 'France' },
+  paris: { lat: 48.8566, lng: 2.3522, name: 'Paris' },
   toronto: { lat: 43.6532, lng: -79.3832, name: 'Toronto' }
 };
 
