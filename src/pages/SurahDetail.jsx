@@ -218,9 +218,9 @@ export default function SurahDetail() {
           )}
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold mb-4">{surah?.number}. {surah?.name}</h1>
+            <h1 className="text-3xl text-white font-bold mb-4">{surah?.number}. {surah?.name}</h1>
             <div className="flex justify-center mb-6">
-              <p className="text-gray-400 px-6 py-2 bg-[#1a1a1a] rounded-full border-2 border-green-500 shadow-lg inline-block">
+              <p className="text-white px-6 py-2 bg-[#1a1a1a] rounded-full border-2 border-green-500 shadow-lg inline-block">
                 {surah?.englishName}
               </p>
             </div>
@@ -333,11 +333,11 @@ export default function SurahDetail() {
                 <div className="flex-1">
                   {/* Affichage conditionnel basé sur la langue sélectionnée */}
                   {selectedLanguage === 'Arabic' ? (
-                    <p className="text-2xl mb-4 text-right font-arabic leading-loose">
+                    <p className="text-2xl mb-4 text-right font-arabic leading-loose text-white">
                       {verse.text}
                     </p>
                   ) : (
-                    <p className="text-gray-300 text-lg">
+                    <p className="text-white text-lg">
                       {translation[index].text}
                     </p>
                   )}

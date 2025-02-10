@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import './utils/pwaHandler';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,10 +16,10 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('/serviceWorker.js')
       .then(registration => {
-        console.log('SW registered');
+        console.log('SW registered: ', registration);
       })
-      .catch(error => {
-        console.log('SW registration failed:', error);
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
       });
   });
 }

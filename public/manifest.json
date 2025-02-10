@@ -16,27 +16,11 @@
       "purpose": "any maskable"
     }
   ],
-  "id": "/",
-  "start_url": "/?mode=pwa",
-  "display": "fullscreen",
-  "display_override": ["fullscreen"],
+  "start_url": "/",
+  "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#070907",
   "background_color": "#070907",
-  "categories": ["lifestyle"],
   "prefer_related_applications": false,
-  "scope": "/",
-  "protocol_handlers": [
-    {
-      "protocol": "web+hidaya",
-      "url": "/%s"
-    }
-  ],
-  "capture_links": "new-client",
-  "shortcuts": [
-    {
-      "name": "Horaires de prière",
-      "url": "/"
-    }
-  ]
+  "scope": "/"
 } 

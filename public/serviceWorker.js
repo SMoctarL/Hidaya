@@ -2,29 +2,28 @@ const CACHE_NAME = 'hidaya-v1';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/static/js/bundle.js',
+  '/static/js/main.chunk.js',
+  '/static/js/0.chunk.js',
   '/manifest.json',
-  '/favicon.ico',
   '/logo192.png',
   '/logo512.png',
-  '/static/js/main.chunk.js',
-  '/static/js/bundle.js',
-  '/static/js/vendors~main.chunk.js',
+  '/favicon.ico',
   '/quran',
-  '/install'
+  '/favorites'
 ];
 
-// Installation du SW
+// Installation
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Cache ouvert');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Activation du SW
+// Activation
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -39,21 +38,26 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Stratégie de cache : Network First, puis cache
+// Fetch
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    fetch(event.request)
+    caches.match(event.request)
       .then((response) => {
-        // Clone la réponse
-        const responseClone = response.clone();
-        
-        caches.open(CACHE_NAME)
-          .then((cache) => {
-            cache.put(event.request, responseClone);
+        if (response) {
+          return response;
+        }
+        return fetch(event.request)
+          .then((response) => {
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                cache.put(event.request, responseToCache);
+              });
+            return response;
           });
-
-        return response;
       })
-      .catch(() => caches.match(event.request))
   );
 }); 
