@@ -15,36 +15,19 @@ html, body {
 
 /* Styles pour l'application installée */
 @media screen and (display-mode: standalone) {
-  :root {
-    --safe-top: env(safe-area-inset-top, 44px);
-  }
-
   body {
-    padding-top: var(--safe-top);
+    padding-top: env(safe-area-inset-top);
   }
 
-  /* Navigation principale */
-  nav {
-    position: fixed;
-    top: var(--safe-top);
-    left: 0;
-    right: 0;
-    background-color: #070907;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-
-  /* Logo Hidaya */
-  .logo, nav a {
-    margin-top: var(--safe-top);
+  /* Ajuste la position du logo Hidaya */
+  .logo {
+    margin-top: env(safe-area-inset-top);
   }
 
   /* Garde les autres éléments alignés */
   nav {
     padding-top: env(safe-area-inset-top);
+    background-color: #070907;
   }
 
   /* Ajuste les boutons fixed avec une valeur plus grande */
