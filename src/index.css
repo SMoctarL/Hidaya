@@ -30,12 +30,12 @@ html, body {
     background-color: #070907;
   }
 
-  /* Ajuste les boutons avec plus d'espace */
+  /* Ajuste les boutons fixed */
   .nav-buttons, 
   .back-button,
   .favorite-button {
-    margin-top: calc(env(safe-area-inset-top) + 20px);
-    padding-top: 15px;
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 44px) !important; /* Force la position */
   }
 
   /* Spécifique pour iOS */
@@ -43,7 +43,7 @@ html, body {
     .nav-buttons, 
     .back-button,
     .favorite-button {
-      margin-top: calc(env(safe-area-inset-top) + 30px);
+      top: calc(env(safe-area-inset-top) + 50px) !important;
     }
   }
 }
