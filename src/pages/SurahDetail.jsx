@@ -2,8 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MdSkipPrevious, MdSkipNext, MdPlayArrow, MdPause, MdMenu } from 'react-icons/md';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaPause, FaPlay, FaStepBackward, FaStepForward } from 'react-icons/fa';
 import { useFavorites } from '../contexts/FavoritesContext';
+
+const RECITERS = {
+  'ar.alafasy': 'Mishary Rashid Alafasy',
+  'ar.abdulbasitmurattal': 'Abdul Basit Murattal',
+  'ar.abdullahbasfar': 'Abdullah Basfar'
+};
 
 export default function SurahDetail() {
   const { id } = useParams();
@@ -19,6 +25,14 @@ export default function SurahDetail() {
   const [nextSurah, setNextSurah] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('Arabic');
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const [selectedReciter, setSelectedReciter] = useState('ar.alafasy');
+  const [progress, setProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const progressInterval = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const progressBarRef = useRef(null);
 
   useEffect(() => {
     const fetchSurahDetails = async () => {
@@ -35,7 +49,10 @@ export default function SurahDetail() {
 
         // Récupérer les détails de la sourate actuelle
         const surahResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${id}`);
-        setSurah(surahResponse.data.data);
+        setSurah({
+          ...surahResponse.data.data,
+          audioUrl: `https://cdn.islamic.network/quran/audio-surah/128/${selectedReciter}/${id}.mp3`
+        });
 
         // Récupérer les versets en arabe
         const arabicResponse = await axios.get(`https://api.alquran.cloud/v1/surah/${id}/ar.alafasy`);
@@ -76,7 +93,17 @@ export default function SurahDetail() {
         fullSurahAudioRef.current.pause();
       }
     };
-  }, [id]);
+  }, [id, selectedReciter]);
+
+  // Réinitialiser la lecture quand la sourate ou le récitateur change
+  useEffect(() => {
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setProgress(0);
+    }
+  }, [id, selectedReciter]);
 
   const handleFullSurahPlay = () => {
     // Arrêter la lecture d'un verset individuel si en cours
@@ -95,7 +122,7 @@ export default function SurahDetail() {
     }
 
     // Utiliser une URL différente pour la sourate complète
-    const audioUrl = `https://server8.mp3quran.net/afs/${id.padStart(3, '0')}.mp3`;
+    const audioUrl = `https://cdn.islamic.network/quran/audio-surah/128/${selectedReciter}/${id}.mp3`;
     const audio = new Audio(audioUrl);
     fullSurahAudioRef.current = audio;
 
@@ -181,6 +208,186 @@ export default function SurahDetail() {
     }
   };
 
+  const handleReciterChange = (event) => {
+    setSelectedReciter(event.target.value);
+    setIsPlaying(false);
+    setProgress(0);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  // Formater le temps en hh:mm:ss ou mm:ss selon la durée
+  const formatTime = (time) => {
+    if (!time || isNaN(time)) return "0:00";
+    
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = Math.floor(time % 60);
+
+    if (hours > 0) {
+      return `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
+  // Démarrer la mise à jour de la progression
+  const startProgressUpdate = () => {
+    if (progressInterval.current) {
+      clearInterval(progressInterval.current);
+    }
+
+    progressInterval.current = setInterval(() => {
+      if (audioRef.current && !audioRef.current.paused) {
+        const current = audioRef.current.currentTime;
+        const duration = audioRef.current.duration;
+        if (!isNaN(current) && !isNaN(duration) && duration > 0) {
+          setCurrentTime(current);
+          const progressPercent = (current / duration) * 100;
+          setProgress(progressPercent);
+        }
+      }
+    }, 100);
+  };
+
+  // Arrêter la mise à jour de la progression
+  const stopProgressUpdate = () => {
+    if (progressInterval.current) {
+      clearInterval(progressInterval.current);
+    }
+  };
+
+  // Gérer le play/pause
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        stopProgressUpdate();
+      } else {
+        audioRef.current.play()
+          .then(() => {
+            startProgressUpdate();
+          })
+          .catch(error => {
+            console.error('Erreur de lecture:', error);
+            setIsPlaying(false);
+          });
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  // Gérer le chargement initial de l'audio
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      const duration = audioRef.current.duration;
+      if (!isNaN(duration)) {
+        setDuration(duration);
+      }
+    }
+  };
+
+  // Fonctions de navigation
+  const goToPreviousSurah = () => {
+    const prevId = parseInt(id) - 1;
+    if (prevId >= 1) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setIsPlaying(false);
+      setProgress(0);
+      navigate(`/quran/${prevId}`);
+    }
+  };
+
+  const goToNextSurah = () => {
+    const nextId = parseInt(id) + 1;
+    if (nextId <= 114) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setIsPlaying(false);
+      setProgress(0);
+      navigate(`/quran/${nextId}`);
+    }
+  };
+
+  // Fonction pour calculer la nouvelle position
+  const calculateNewPosition = (e) => {
+    if (progressBarRef.current && audioRef.current) {
+      const rect = progressBarRef.current.getBoundingClientRect();
+      const clickPosition = e.clientX - rect.left;
+      const progressBarWidth = rect.width;
+      const newProgress = Math.max(0, Math.min(100, (clickPosition / progressBarWidth) * 100));
+      const newTime = (audioRef.current.duration * newProgress) / 100;
+      
+      setProgress(newProgress);
+      setCurrentTime(newTime);
+      audioRef.current.currentTime = newTime;
+    }
+  };
+
+  // Gérer le clic sur la barre
+  const handleProgressClick = (e) => {
+    calculateNewPosition(e);
+  };
+
+  // Gérer le début du glissement
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    calculateNewPosition(e);
+  };
+
+  // Gérer le glissement
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      calculateNewPosition(e);
+    }
+  };
+
+  // Gérer la fin du glissement
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Ajouter/Supprimer les écouteurs d'événements pour le glissement
+  useEffect(() => {
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('touchmove', handleMouseMove);
+    document.addEventListener('touchend', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleMouseMove);
+      document.removeEventListener('touchend', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  // Mettre à jour la progression
+  useEffect(() => {
+    if (audioRef.current && surah?.audioUrl) {
+      audioRef.current.load();
+      setIsPlaying(false);
+      setProgress(0);
+      setCurrentTime(0);
+    }
+  }, [surah?.audioUrl]);
+
+  // Nettoyer les intervalles
+  useEffect(() => {
+    return () => {
+      if (progressInterval.current) {
+        clearInterval(progressInterval.current);
+      }
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
   if (!surah || verses.length === 0 || translation.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -190,7 +397,7 @@ export default function SurahDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#070907] text-white">
       <div className="container mx-auto px-4 py-8">
 
         {/* Navigation avec flèches */}
@@ -253,50 +460,74 @@ export default function SurahDetail() {
           )}
         </div>
 
-        {/* Lecteur Audio */}
-        <div className="w-full max-w-3xl mx-auto mb-12">
-          <div className="mb-6">
-            <p className="text-center text-gray-400 mb-2">Select reciter</p>
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+        {/* Sélecteur de récitateur */}
+        <div className="px-4 mb-6">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-[#1a1a1a] p-4 rounded-2xl">
+              <label className="block text-gray-300 mb-2 text-center">Select reciter</label>
               <select
-                className="w-full bg-transparent text-white focus:outline-none"
-                defaultValue="Mishary_Rashid_Alafasy"
+                value={selectedReciter}
+                onChange={handleReciterChange}
+                className="w-full p-3 rounded-lg bg-[#262626] text-white border border-gray-700 focus:border-green-500 focus:outline-none text-center"
               >
-                <option value="Mishary_Rashid_Alafasy">Yasser Al-Dossary</option>
+                {Object.entries(RECITERS).map(([value, name]) => (
+                  <option key={value} value={value} className="text-center">
+                    {name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
+        </div>
 
-          <div className="flex justify-center items-center gap-6">
-            <button 
-              onClick={handlePreviousTrack}
-              className="text-gray-400 hover:text-white text-3xl"
-              disabled={Number(id) <= 1}
-            >
-              <MdSkipPrevious />
-            </button>
-            <button
-              onClick={handleFullSurahPlay}
-              className="text-white hover:text-green-500 text-4xl"
-            >
-              {isPlayingFull ? <MdPause /> : <MdPlayArrow />}
-            </button>
-            <button 
-              onClick={handleNextTrack}
-              className="text-gray-400 hover:text-white text-3xl"
-              disabled={Number(id) >= 114}
-            >
-              <MdSkipNext />
-            </button>
-          </div>
+        {/* Contrôles de lecture et barre de progression */}
+        <div className="px-4 mb-6">
+          <div className="max-w-2xl mx-auto">
+            <div className="w-full flex items-center gap-4">
+              {/* Bouton précédent */}
+              <button
+                onClick={() => navigate(`/quran/${parseInt(id) - 1}`)}
+                disabled={parseInt(id) <= 1}
+                className={`text-gray-400 ${parseInt(id) <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-green-500'}`}
+              >
+                <FaStepBackward size={20} />
+              </button>
+              
+              {/* Bouton play/pause */}
+              <button
+                onClick={togglePlay}
+                className="text-gray-400 hover:text-green-500"
+              >
+                {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
+              </button>
 
-          {/* Barre de progression */}
-          <div className="mt-4 flex items-center gap-2">
-            <span className="text-xs text-gray-400">0:00</span>
-            <div className="flex-1 h-1 bg-gray-700 rounded-full">
-              <div className="h-full bg-green-500 rounded-full" style={{ width: '0%' }}></div>
+              {/* Bouton suivant */}
+              <button
+                onClick={() => navigate(`/quran/${parseInt(id) + 1}`)}
+                disabled={parseInt(id) >= 114}
+                className={`text-gray-400 ${parseInt(id) >= 114 ? 'opacity-50 cursor-not-allowed' : 'hover:text-green-500'}`}
+              >
+                <FaStepForward size={20} />
+              </button>
+
+              {/* Temps et barre de progression */}
+              <span className="text-sm text-gray-400">{formatTime(currentTime)}</span>
+              
+              <div 
+                ref={progressBarRef}
+                className="flex-1 h-1 bg-gray-700 rounded-full relative cursor-pointer"
+                onClick={handleProgressClick}
+                onMouseDown={handleMouseDown}
+                onTouchStart={handleMouseDown}
+              >
+                <div 
+                  className="h-full bg-green-500 rounded-full absolute top-0 left-0"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+
+              <span className="text-sm text-gray-400">{formatTime(duration)}</span>
             </div>
-            <span className="text-xs text-gray-400">--:--</span>
           </div>
         </div>
 
@@ -327,28 +558,44 @@ export default function SurahDetail() {
         </div>
 
         {/* Versets modifiés */}
-        <div className="space-y-8 max-w-3xl mx-auto">
-          {verses.map((verse, index) => (
-            <div key={verse.number} className="border-b border-gray-700 pb-6">
-              <div className="flex items-start gap-4">
-                <span className="text-green-500 font-medium">{verse.numberInSurah}.</span>
-                <div className="flex-1">
-                  {/* Affichage conditionnel basé sur la langue sélectionnée */}
-                  {selectedLanguage === 'Arabic' ? (
-                    <p className="text-2xl mb-4 text-right font-arabic leading-loose text-white">
-                      {verse.text}
-                    </p>
-                  ) : (
-                    <p className="text-white text-lg">
-                      {translation[index].text}
-                    </p>
-                  )}
+        <div className="px-4 py-6">
+          <div className="max-w-2xl mx-auto">
+            {verses.map((verse, index) => (
+              <div key={verse.number} className="border-b border-gray-700 pb-6">
+                <div className="flex items-start gap-4">
+                  <span className="text-green-500 font-medium">{verse.numberInSurah}.</span>
+                  <div className="flex-1">
+                    {/* Affichage conditionnel basé sur la langue sélectionnée */}
+                    {selectedLanguage === 'Arabic' ? (
+                      <p className="text-2xl mb-4 text-right font-arabic leading-loose text-white">
+                        {verse.text}
+                      </p>
+                    ) : (
+                      <p className="text-white text-lg">
+                        {translation[index].text}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+      <audio
+        ref={audioRef}
+        src={surah?.audioUrl}
+        className="hidden"
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={() => {
+          stopProgressUpdate();
+          setIsPlaying(false);
+        }}
+        onError={(e) => {
+          console.error('Erreur audio:', e);
+          setIsPlaying(false);
+        }}
+      />
     </div>
   );
 } 
